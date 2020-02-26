@@ -12,6 +12,7 @@ public class CustomHttpLogging implements HttpLoggingInterceptor.Logger {
     @Override
     public void log(String message) {
         final String logName = "OkHttp";
+
         if (!message.startsWith("{")) {
             Log.d(logName, message);
             return;

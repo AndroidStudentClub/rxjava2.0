@@ -4,10 +4,10 @@ import android.app.Application;
 
 import retrofit2.Retrofit;
 import ru.mikhailskiy.retrofitexample.network.AdvancedApiClient;
-import ru.mikhailskiy.retrofitexample.network.ApiInterface;
+import ru.mikhailskiy.retrofitexample.network.MovieApiInterface;
 
 public class RetroApp extends Application {
-    public ApiInterface service;
+    public MovieApiInterface service;
 
     private static RetroApp instance;
 
@@ -16,7 +16,6 @@ public class RetroApp extends Application {
         super.onCreate();
 
         instance = this;
-
         initRetrofit();
     }
 
@@ -28,7 +27,7 @@ public class RetroApp extends Application {
 
         Retrofit retrofit = AdvancedApiClient.getClient();
 
-        service = retrofit.create(ApiInterface.class);
+        service = retrofit.create(MovieApiInterface.class);
     }
 }
 
