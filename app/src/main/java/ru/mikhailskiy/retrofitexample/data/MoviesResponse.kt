@@ -11,5 +11,3 @@ data class MoviesResponse (
     var totalPages: Int
 )
 
-
-

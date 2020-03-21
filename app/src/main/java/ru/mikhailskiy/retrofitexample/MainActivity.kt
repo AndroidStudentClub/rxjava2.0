@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Добавляем recyclerView
         val recyclerView = findViewById<RecyclerView>(R.id.movies_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -28,16 +29,15 @@ class MainActivity : AppCompatActivity() {
 
         call.enqueue(object : Callback<MoviesResponse> {
             override fun onResponse(
-                call: Call<MoviesResponse>,
-                response: Response<MoviesResponse>
+                call: Call<MoviesResponse>, response: Response<MoviesResponse>
             ) {
                 val movies = response.body()!!.results
-                recyclerView.adapter =
-                    MoviesAdapter(movies, R.layout.list_item_movie)
+                // Передаем результат в adapter и отображаем элементы
+                recyclerView.adapter = MoviesAdapter(movies, R.layout.list_item_movie)
             }
 
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                // Log error here since request failed
+                // Логируем ошибку
                 Log.e(TAG, t.toString())
             }
         })
@@ -47,9 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         private val TAG = MainActivity::class.java.simpleName
 
-
         // TODO - insert your themoviedb.org API KEY here
-
         private val API_KEY = ""
     }
 }
