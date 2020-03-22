@@ -3,8 +3,6 @@ package ru.mikhailskiy.retrofitexample.data
 
 import com.google.gson.annotations.SerializedName
 
-import java.util.ArrayList
-
 class Movie(
     posterPath: String,
     @SerializedName("adult")

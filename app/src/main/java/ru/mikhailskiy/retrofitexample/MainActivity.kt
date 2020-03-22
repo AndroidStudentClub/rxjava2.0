@@ -1,5 +1,6 @@
 package ru.mikhailskiy.retrofitexample
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -7,6 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +21,7 @@ import ru.mikhailskiy.retrofitexample.network.MovieApiClient
 
 class MainActivity : AppCompatActivity() {
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,22 +30,23 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.movies_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val call = MovieApiClient.apiClient.getTopRatedMovies(API_KEY, "ru")
+        // Получаем Single
+        val getTopRatedMovies = MovieApiClient.apiClient.getTopRatedMovies(API_KEY, "ru")
 
-        call.enqueue(object : Callback<MoviesResponse> {
-            override fun onResponse(
-                call: Call<MoviesResponse>, response: Response<MoviesResponse>
-            ) {
-                val movies = response.body()!!.results
-                // Передаем результат в adapter и отображаем элементы
-                recyclerView.adapter = MoviesAdapter(movies, R.layout.list_item_movie)
-            }
-
-            override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                // Логируем ошибку
-                Log.e(TAG, t.toString())
-            }
-        })
+        getTopRatedMovies
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { it ->
+                    val movies = it.results
+                    // Передаем результат в adapter и отображаем элементы
+                    recyclerView.adapter = MoviesAdapter(movies, R.layout.list_item_movie)
+                },
+                { error ->
+                    // Логируем ошибку
+                    Log.e(TAG, error.toString())
+                }
+            )
     }
 
     companion object {
@@ -48,7 +54,8 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.java.simpleName
 
         // TODO - insert your themoviedb.org API KEY here
-        private val API_KEY = ""
+        private val API_KEY = "0bd95c30f721d1e94381142dc1ce3d50"
+        // private val API_KEY = "7e8f60e325cd06e164799af1e317d7a7"
     }
 }
 
