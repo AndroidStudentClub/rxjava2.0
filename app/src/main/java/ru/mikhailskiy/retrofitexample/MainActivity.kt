@@ -22,6 +22,7 @@ import ru.mikhailskiy.retrofitexample.adapters.MoviesAdapter
 import ru.mikhailskiy.retrofitexample.data.MoviesResponse
 import ru.mikhailskiy.retrofitexample.network.MovieApiClient
 import ru.mikhailskiy.retrofitexample.ui.afterTextChanged
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,9 +31,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        search_toolbar.search_edit_text.afterTextChanged { it ->
-            Log.d(TAG, it.toString())
-        }
+        search_toolbar
+            .onTextChangedObservable
+            .map { it.trim() }
+            .debounce(500, TimeUnit.MILLISECONDS)
+            .filter { it.isNotEmpty() }
+            .subscribe(
+                {
+                    // TODO добавить запрос search-movies
+                    // https://developers.themoviedb.org/3/search/search-movies
+                    Log.d(TAG, it.toString())
+                },
+                { error ->
+                    Log.e(TAG, error.toString())
+                }
+            )
 
         // Получаем Single
         val getTopRatedMovies = MovieApiClient.apiClient.getTopRatedMovies(API_KEY, "ru")
