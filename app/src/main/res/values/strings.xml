@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">RetrofitExample</string>
+
+    <string name="canceling">Отмена</string>
+    <string name="search_hint">Введите текст</string>
 </resources>
