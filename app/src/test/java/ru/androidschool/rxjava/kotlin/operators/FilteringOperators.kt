@@ -2,6 +2,9 @@ package ru.androidschool.rxjava.kotlin.operators
 
 import io.reactivex.Observable
 import org.junit.Test
+import ru.androidschool.rxjava.JustVsFromCallble.sleep
+import java.util.concurrent.TimeUnit
+
 
 class FilteringOperators {
 
@@ -89,4 +92,31 @@ class FilteringOperators {
         source.elementAt(3).subscribe { s -> println(s) }
     }
 
+    @Test
+    fun debounceDemo() {
+
+        val source1 =
+            Observable.interval(50, TimeUnit.MILLISECONDS)
+                .map { i: Long -> "Red $i" } // map to elapsed time
+                .take(3)
+                .doOnNext { x: String? -> println(x) }
+
+        val source2 =
+            Observable.interval(260, TimeUnit.MILLISECONDS)
+                .map { i: Long -> "Green $i" } // map to elapsed time
+                .take(3)
+                .doOnNext { x: String? -> println(x) }
+
+        val source3 =
+            Observable.interval(151, TimeUnit.MILLISECONDS)
+                .map { i: Long -> "Blue $i" } // map to elapsed time
+                .take(2)
+                .doOnNext { x: String? -> println(x) }
+
+        Observable.merge(source1, source2, source3)
+            .debounce(100, TimeUnit.MILLISECONDS)
+            .subscribe { x: String? -> println("Result $x") }
+
+        sleep(5000)
+    }
 }
