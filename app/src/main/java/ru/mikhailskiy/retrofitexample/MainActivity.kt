@@ -3,25 +3,13 @@ package ru.mikhailskiy.retrofitexample
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.search_toolbar.view.*
-
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import ru.mikhailskiy.retrofitexample.adapters.MoviesAdapter
-import ru.mikhailskiy.retrofitexample.data.MoviesResponse
+import ru.mikhailskiy.retrofitexample.data.Movie
 import ru.mikhailskiy.retrofitexample.network.MovieApiClient
-import ru.mikhailskiy.retrofitexample.ui.afterTextChanged
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -34,18 +22,24 @@ class MainActivity : AppCompatActivity() {
         search_toolbar
             .onTextChangedObservable
             .map { it.trim() }
+            .doOnNext { Log.d("THR# 38", Thread.currentThread().name) }
             .debounce(500, TimeUnit.MILLISECONDS)
+            .doOnNext { Log.d("THR# 40", Thread.currentThread().name) }
             .filter { it.isNotEmpty() }
-            .subscribe(
-                {
-                    // TODO добавить запрос search-movies
-                    // https://developers.themoviedb.org/3/search/search-movies
-                    Log.d(TAG, it.toString())
-                },
-                { error ->
-                    Log.e(TAG, error.toString())
-                }
-            )
+            .doOnNext { Log.d("THR# 42", Thread.currentThread().name) }
+            .observeOn(Schedulers.io())
+            .doOnNext { Log.d("THR# 44", Thread.currentThread().name) }
+            .flatMapSingle { it -> MovieApiClient.apiClient.searchByQuery(MainActivity.API_KEY, "ru", it) }
+            .doOnNext { Log.d("THR# After flatMap ", Thread.currentThread().name) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { Log.d("THR# after AnSchedulers", Thread.currentThread().name) }
+            .subscribe({
+                setMovies(it.results)
+                Log.d(MainActivity.TAG, it.toString())
+            }, {
+                Log.e(MainActivity.TAG, it.toString())
+            })
+
 
         // Получаем Single
         val getTopRatedMovies = MovieApiClient.apiClient.getTopRatedMovies(API_KEY, "ru")
@@ -66,6 +60,10 @@ class MainActivity : AppCompatActivity() {
             )
     }
 
+    fun setMovies(movies: List<Movie>) {
+        movies_recycler_view.adapter = MoviesAdapter(movies, R.layout.list_item_movie)
+    }
+
     companion object {
 
         private val TAG = MainActivity::class.java.simpleName
@@ -74,4 +72,3 @@ class MainActivity : AppCompatActivity() {
         private val API_KEY = ""
     }
 }
-

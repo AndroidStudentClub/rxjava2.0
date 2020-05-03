@@ -10,4 +10,7 @@ interface MovieApiInterface {
 
     @GET("movie/top_rated")
     fun getTopRatedMovies(@Query("api_key") apiKey: String, @Query("language") language: String): Single<MoviesResponse>
+
+    @GET("search/movie")
+    fun searchByQuery(@Query("api_key") apiKey: String, @Query("language") language: String, @Query("query") query: String): Single<MoviesResponse>
 }
