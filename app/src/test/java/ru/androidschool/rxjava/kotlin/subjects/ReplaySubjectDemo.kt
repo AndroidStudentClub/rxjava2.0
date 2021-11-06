@@ -1,7 +1,7 @@
 package ru.androidschool.rxjava.kotlin.subjects
 
-import io.reactivex.subjects.ReplaySubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.ReplaySubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 
 class ReplaySubjectDemo {

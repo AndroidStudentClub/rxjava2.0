@@ -1,7 +1,7 @@
 package ru.androidschool.rxjava.kotlin.error_handling
 
-import io.reactivex.Observable
-import io.reactivex.observers.TestObserver
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.observers.TestObserver
 import org.junit.Test
 
 class ErrorHandlingDemo {
@@ -38,10 +38,9 @@ class ErrorHandlingDemo {
 
         val source = Observable.just(5, 2, 1, 0, 3, 2, 8)
             .map { i -> 10 / i }
-            .onErrorResumeNext(Observable.just(100, 200, 300))
+            .onErrorResumeWith(Observable.just(100, 200, 300))
 
         source.subscribe(testObserver)
-
 
         testObserver.assertNoErrors()
         testObserver.assertComplete()

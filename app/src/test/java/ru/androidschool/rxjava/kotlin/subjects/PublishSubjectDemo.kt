@@ -1,7 +1,7 @@
 package ru.androidschool.rxjava.kotlin.subjects
 
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 
 class PublishSubjectDemo {

@@ -2,12 +2,11 @@ package ru.androidschool.rxjava;
 
 import org.junit.Test;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.Single;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class CreateExample {
 
@@ -37,7 +36,6 @@ public class CreateExample {
 
             @Override
             public void onNext(String s) {
-
                 System.out.println("onNext: " + s);
             }
 

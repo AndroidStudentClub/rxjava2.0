@@ -1,8 +1,7 @@
 package ru.androidschool.rxjava.kotlin.operators
 
-import io.reactivex.Observable
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Function3
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.functions.BiFunction
 import org.junit.Test
 
 class Zip {
