@@ -1,6 +1,6 @@
 package ru.androidschool.rxjava.kotlin.operators
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import org.junit.Test
 import ru.androidschool.rxjava.JustVsFromCallble.sleep
 import java.util.concurrent.TimeUnit

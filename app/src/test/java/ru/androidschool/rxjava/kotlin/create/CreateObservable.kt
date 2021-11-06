@@ -1,11 +1,9 @@
 package ru.androidschool.rxjava.kotlin.create
 
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
-import org.junit.Assert.*
-import java.util.concurrent.Callable
 
 class CreateObservable {
 

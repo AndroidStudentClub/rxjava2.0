@@ -1,7 +1,7 @@
 package ru.androidschool.rxjava.kotlin.subjects
 
-import io.reactivex.subjects.AsyncSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.AsyncSubject
+import io.reactivex.rxjava3.subjects.Subject
 import org.junit.Test
 
 class AsyncSubjectDemo {
