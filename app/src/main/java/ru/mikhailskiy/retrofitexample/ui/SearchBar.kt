@@ -8,8 +8,8 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.search_toolbar.view.*
 import ru.mikhailskiy.retrofitexample.R
 

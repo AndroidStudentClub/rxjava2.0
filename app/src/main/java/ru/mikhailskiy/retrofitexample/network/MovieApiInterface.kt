@@ -1,7 +1,7 @@
 package ru.mikhailskiy.retrofitexample.network
 
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 import ru.mikhailskiy.retrofitexample.data.MoviesResponse
