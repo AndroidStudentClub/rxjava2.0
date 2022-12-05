@@ -1,2 +1,2 @@
 # rxjava3.0
-Проект с примерами из курса RxJava3.0 
+This GitHub project aims to provide examples and best practices for using RxJava3, a popular reactive programming library for Java. RxJava3 allows developers to write asynchronous, non-blocking code that is more resilient and easier to manage. In this project, we showcase how to use RxJava3 to solve common problems and demonstrate how to write clean and maintainable code with the library. We also provide tips and guidance for using RxJava3 effectively in your own projects. Whether you are new to reactive programming or an experienced developer looking to learn more about RxJava3, this project is a valuable resource.
